@@ -13,24 +13,25 @@ public class SyncronizedTest {
 //        executorService.execute(() -> e1.func1());
 //        executorService.execute(() -> e1.func1());
         // synchronized class
-//        SynchronizedClass e2 = new SynchronizedClass();
-//        SynchronizedClass e3 = new SynchronizedClass();
-//        ExecutorService executorService2 = Executors.newCachedThreadPool();
-//        executorService2.execute(() -> e2.func1());
-//        executorService2.execute(() -> e3.func1());
+        SynchronizedClass e2 = new SynchronizedClass();
+        SynchronizedClass e3 = new SynchronizedClass();
+        ExecutorService executorService2 = Executors.newCachedThreadPool();
+        executorService2.execute(() -> e2.func1());
+        executorService2.execute(() -> e3.func1());
 
         // lock with Reentrant lock
-        LockExample le = new LockExample();
-        ExecutorService executorService4 = Executors.newCachedThreadPool();
-        executorService4.execute(()->le.func());
-        executorService4.execute(()->le.func());
+//        LockExample le = new LockExample();
+//        ExecutorService executorService4 = Executors.newCachedThreadPool();
+//        executorService4.execute(()->le.func());
+//        executorService4.execute(()->le.func());
     }
 }
+
 class SynchronizedInstance {
 
     public void func1() {
         synchronized (this) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 100; i++) {
                 System.out.print(i + " ");
             }
         }
@@ -40,7 +41,21 @@ class SynchronizedInstance {
 class SynchronizedClass {
 
     public void func1() {
-        synchronized (SynchronizedClass.class) {
+        synchronized (SynchronizedClass2.class) {
+            for (int i = 0; i < 100; i++) {
+                System.out.print(i + " ");
+                if (i % 50 == 0) {
+                    System.out.println("\n");
+                }
+            }
+        }
+    }
+}
+
+class SynchronizedClass2 {
+
+    public void func1() {
+        synchronized (SynchronizedClass2.class) {
             for (int i = 0; i < 10; i++) {
                 System.out.print(i + " ");
             }

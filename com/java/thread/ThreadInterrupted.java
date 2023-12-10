@@ -15,21 +15,29 @@ public class ThreadInterrupted {
 //        }
 
         // test interrupt
-//        Thread thread1 = new MyThread1();
+//        MyThread1 thread1 = new MyThread1();
 //        thread1.start();
-//        thread1.interrupt();
+//        Thread.sleep(3000);
+//        thread1.stop=true;
+//        //thread1.interrupt();
 //        System.out.println("Main run");
 
         // test interrupt 2
-//        Thread thread2 = new MyThread2();
-//        thread2.start();
+        Thread thread2 = new MyThread2();
+        thread2.start();
+        System.out.println(Thread.currentThread().getName());
+        Thread.currentThread().sleep(5000);
+        thread2.interrupt();
+
+        // test interrupt 3
+//        Thread thread3 = new MyThread3();
+//        thread3.start();
 //        System.out.println(Thread.currentThread().getName());
-//        Thread.currentThread().sleep(5000);
-//        thread2.interrupt();
+//        thread3.interrupt();
 
         // test executor
 
-        testExecutor();
+//        testExecutor();
     }
     public static void testExecutor() {
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -48,13 +56,11 @@ public class ThreadInterrupted {
 }
 
 class MyThread1 extends Thread {
+    public volatile boolean stop=false;
     @Override
     public void run() {
-        try {
-            Thread.sleep(2000);
+        while (!stop) {
             System.out.println("Thread run");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }
@@ -70,6 +76,18 @@ class MyThread2 extends Thread {
         }
         System.out.println("Thread end");
 
+    }
+}
+
+class MyThread3 extends Thread {
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(2000);
+            System.out.println("Thread run");
+        } catch (InterruptedException exception ){
+            exception.printStackTrace();
+        }
     }
 }
 
